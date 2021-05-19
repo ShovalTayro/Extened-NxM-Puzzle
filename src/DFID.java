@@ -21,17 +21,7 @@ public class DFID {
 			//make_hash_table
 			Hashtable<String, Node>hashTable = new Hashtable<String, Node>();
 			//limited_dfs
-			result = limited_DFS(start,goalState,depth,hashTable);
-			if(open) {
-				System.out.println("\niteration #" + iteration++);
-				int count = 0;
-				for (Entry<String, Node> entry : hashTable.entrySet()) {
-					String key = entry.getKey();
-					Node value = entry.getValue();
-					System.out.println (count +"-  Key: " + key + " Value: " + value.getDirection());
-					count++;
-				}
-			}
+			result = limited_DFS(start,goalState,depth,hashTable,open);
 			//if result != cutoff
 			if (!result.equals("cutoff")) {
 				depth = Integer.MAX_VALUE;
@@ -42,7 +32,7 @@ public class DFID {
 		return " no path \nNum: "+counter;
 	}
 
-	public String limited_DFS(Node n, Integer[][] goalState, int limit, Hashtable <String,Node> hashtable) {
+	public String limited_DFS(Node n, Integer[][] goalState, int limit, Hashtable <String,Node> hashtable, boolean open) {
 		boolean isCutOff; 
 		String result = "";
 		//if goal
@@ -66,7 +56,17 @@ public class DFID {
 				if(hashtable.containsKey(operator.toString())) continue;
 				operator.setParent(n);    
 				//limited_dfs with limit-1
-				result = limited_DFS(operator, goalState, limit-1, hashtable);
+				result = limited_DFS(operator, goalState, limit-1, hashtable,open);
+				if(open) {
+					System.out.println("\niteration #" + iteration++);
+					int count = 0;
+					for (Entry<String, Node> entry : hashtable.entrySet()) {
+						String key = entry.getKey();
+						Node value = entry.getValue();
+						System.out.println (count +"-  Key: " + key + " Value: " + value.getDirection());
+						count++;
+					}
+				}
 				// if result = cutoff -> true
 				if(result.equals("cutoff")) isCutOff = true;
 				// if result != fail

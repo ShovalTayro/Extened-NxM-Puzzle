@@ -29,6 +29,17 @@ public class DFBnB {
 		while(!l.isEmpty()) {
 			//l.remove_front(front)
 			Node front = l.pop();
+			if(open) {
+				iteration++;
+				System.out.println("\niteration #" + iteration);
+				int count = 0;
+				for (Entry<String, Node> entry : open_list.entrySet()) {
+					String key = entry.getKey();
+					Node value = entry.getValue();
+					System.out.println (count +"-  Key: " + key + " Value: " + value.getDirection());
+					count++;
+				}
+			}
 			//if from marked as "out" -> h.remove(front)
 			if(front.getOut()) open_list.remove(front.toString());
 			else {
@@ -73,17 +84,6 @@ public class DFBnB {
 				for(int j = operators.size()-1; j >= 0 ; j--) {
 					l.add(operators.get(j));
 					open_list.put(operators.get(j).toString(), operators.get(j));
-				}
-			}
-			if(open) {
-				iteration++;
-				System.out.println("\niteration #" + iteration);
-				int count = 0;
-				for (Entry<String, Node> entry : open_list.entrySet()) {
-					String key = entry.getKey();
-					Node value = entry.getValue();
-					System.out.println (count +"-  Key: " + key + " Value: " + value.getDirection());
-					count++;
 				}
 			}
 		}
